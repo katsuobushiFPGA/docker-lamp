@@ -1,26 +1,27 @@
-version: 3.7
+version: "3.7"
 services:
   web:
     container_name: web
     build: ./web
     ports:
       - 80:80
+      - 443:443
     privileged: true
     volumes:
       - ./web/project:/var/www/html
     links:
       - db
   db:
-    image: mysql:8.0
     container_name: db
-    build: ./db
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
     ports:
       - 3306:3306
     volumes:
       - ./db/init:/docker-entrypoint-initdb.d
       - ./db/data:/var/lib/mysql
-      - ./db/mysql_conf/:/etc/mysql/conf.d
-      environment:
+    environment:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_USER: test
         MYSQL_PASSWORD: test
