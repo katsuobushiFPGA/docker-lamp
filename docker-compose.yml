@@ -1,0 +1,36 @@
+version: 3.7
+services:
+  web:
+    container_name: web
+    build: ./web
+    ports:
+      - 80:80
+    privileged: true
+    volumes:
+      - ./web/project:/var/www/html
+    links:
+      - db
+  db:
+    image: mysql:8.0
+    container_name: db
+    build: ./db
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d
+      - ./db/data:/var/lib/mysql
+      - ./db/mysql_conf/:/etc/mysql/conf.d
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_USER: test
+        MYSQL_PASSWORD: test
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=db
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    ports:
+      - 8080:80
