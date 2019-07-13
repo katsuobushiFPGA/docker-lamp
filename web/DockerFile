@@ -13,8 +13,6 @@ ADD ./conf/ssl.conf /etc/apache2/sites-available/ssl.conf
 ADD ./key/server.key /etc/apache2/server.key
 ADD ./key/server.csr /etc/apache2/server.csr
 ADD ./key/server.crt /etc/apache2/server.crt
-ADD ./key/passphrase.sh /etc/apache2/passphrase.sh
-RUN chmod a+x /etc/apache2/passphrase.sh
 
 RUN a2enmod ssl
 RUN a2ensite ssl
