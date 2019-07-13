@@ -14,6 +14,11 @@ ADD ./key/server.key /etc/apache2/server.key
 ADD ./key/server.csr /etc/apache2/server.csr
 ADD ./key/server.crt /etc/apache2/server.crt
 
+#change server name and docment root
+ARG DOCUMENT_ROOT
+RUN sed -ri -e "s!/var/www/html!${DOCUMENT_ROOT}!g" /etc/apache2/sites-available/*.conf
+RUN sed -ri -e "s!/var/www/!${DOCUMENT_ROOT}!g" /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
 RUN a2enmod ssl
 RUN a2ensite ssl
 RUN service apache2 restart

@@ -2,7 +2,10 @@ version: "3.7"
 services:
   web:
     container_name: web
-    build: ./web
+    build: 
+      context: ./web
+      args:
+        DOCUMENT_ROOT: /var/www/html/app/webroot
     ports:
       - 80:80
       - 443:443
@@ -22,9 +25,9 @@ services:
       - ./db/init:/docker-entrypoint-initdb.d
       - ./db/data:/var/lib/mysql
     environment:
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_USER: test
-        MYSQL_PASSWORD: test
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
