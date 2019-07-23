@@ -12,6 +12,7 @@ services:
     privileged: true
     volumes:
       - ./web/project:/var/www/html
+      - ./web/conf/php.ini:/usr/local/etc/php/php.ini
     links:
       - db
   db:
