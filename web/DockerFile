@@ -1,7 +1,7 @@
 FROM php:7.3-apache
 
-RUN apt-get update \
-    && apt-get upgrade \
+RUN apt-get update -y \
+    && apt-get upgrade -y \
     && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev libmcrypt-dev libicu-dev libxml2-dev libzip-dev zip libssl-dev openssl ssl-cert \
     && docker-php-ext-configure zip --with-libzip \
     && docker-php-ext-install intl gd mbstring mysqli pdo_mysql soap zip
